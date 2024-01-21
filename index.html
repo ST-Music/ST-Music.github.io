@@ -1,83 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maurer Rose</title>
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Ping</title>
 </head>
+
+<script type="text/javascript"> 
+// csound.js is the Csound WASM module
+const csoundjs = "csound.js";
+//const csoundjs = "/storage/emulated/0/Music/Csound/HTML/csound.js";
+
+// csound is the Csound engine object (null as we start)
+let csound = null;
+
+// csound synthesis code
+const code = `
+instr 1
+  out linenr(oscili(0dbfs*p4,p5),0.01,0.5,0.01)
+endin
+schedule(1,0,1,0.2,A4)
+`;
+
+// this is the JS function to run Csound
+async function play() {
+// if the Csound object is not initialised
+if(csound == null) {
+// import the Csound method from csound.js
+const { Csound } = await import(csoundjs);
+// create a Csound engine object
+csound = await Csound();
+// set realtime audio (dac) output  
+await csound.setOption("-odac");
+// compile csound code
+await csound.compileOrc(code);
+// start the engine
+await csound.start();
+} else
+// if not just send an event to play a sound
+await csound.inputMessage('i1 0 1 0.2 440');
+}
+
+</script>
 <body>
-<Body style="background-color:black"> 
-  <canvas id="cvs"></canvas>
-    <script>
-        
-let canvas, ctx;
-
-const {sin, cos, tan, min, abs, PI} = Math;
-
-let a = 0;
-let b = 3;
-let d = 97;
-// let n = 4; orig. 4
-
-const color = { r: 0, g: 0, b: 0 };
-
-const animate = rad => {
-
-    const loop = () => {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.825)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        const center = rad - rad * 0.5;
-        a += 0.2;
-        color.r += 0.063; color.g += 0.027; color.b += 0.0156;
-        let _r = abs(sin(color.r/5) * 255);
-        let _g = abs(sin(color.g/5) * 250);
-        let _b = abs(sin(color.b/5) * 255);
-//////////////////////////////////////////
-        d += 0.001;  // orig 0.2
-//////////////////////////////////////////
-        ctx.fillStyle = `rgb(${_r}, ${_g}, ${_b})`;
-        ctx.strokeStyle = ctx.fillStyle;
-        ctx.save();
-        ctx.translate(center, center);
-        ctx.rotate(a * PI / 180);
-        ctx.beginPath();
-        for(let i = 0; i < 361; i++) {
-            
-            const k  = i * d * PI / 180;
-            // n modification
-            const n = sin(1);
-            const r = (rad * 0.45) * sin(n * k);
-            
-            const x = cos(k) * r;
-            const y = sin(k) * r;
-            ctx.lineTo(x, y);
-        }
-        ctx.closePath();
-        ctx.stroke();
-        ctx.restore();
-        requestAnimationFrame(loop);
-    }
-    requestAnimationFrame(loop);
-}
-
-const main = () => {
-    canvas = document.getElementById("cvs");
-    ctx = canvas.getContext("2d");
-    const radius = min(innerWidth, innerHeight);
-    canvas.width = radius;
-    canvas.height = radius;
-    canvas.style.position = "absolute";
-    canvas.style.left = innerWidth * 0.5 - radius * 0.5 + "px";
-    canvas.style.top = innerHeight * 0.5 - radius * 0.5 + "px";
-    
-    
-    animate(radius);
-    
-}
-
-
-addEventListener("load", main);
-       
-    </script>
-</body>
-</html>
+<div id="click area" onclick="play()">
+<h1>Ping</h1>
+<p> Click here to hear a sound.</p>
+</div>
+<hr>
+<p><a href="./readme.html">README</a></p>
+<!-- hhmts start -->Last modified: Thu Dec  8 16:09:54 GMT 2022 <!-- hhmts end -->
+</body> </html>
