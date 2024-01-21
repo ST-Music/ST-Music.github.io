@@ -1,0 +1,57 @@
+<!-- Simple Web Csound Example
+  Author: Steven Yi
+  Date: 2024-01-20
+-->
+<html>
+  <body>
+    <button id="btn">Start</button>
+  </body>
+  <script type="module">
+    const { Csound } = await import('https://www.unpkg.com/@csound/browser@6.18.7/dist/csound.js');
+
+    const btn = document.querySelector("#btn");
+
+    btn.onclick = async () => {
+
+      const cs = await Csound();
+      await cs.setOption("-odac");
+      await cs.setOption("--sample-rate=44100");
+      await cs.setOption("--ksmps=64");
+      await cs.setOption("--0dbfs=1");
+      await cs.compileOrc(`
+      instr 1
+        aout = oscili(p5, p4)
+        aout *= transegr:a(0, .008, 0, 1, 2, -4.2, 0, 2, -4.2, 0)
+        outs(aout, aout)
+      endin
+
+      instr Main 
+
+
+        if(random:i(0,1) > 0.5) then
+          ivals[] = array(0,4,3,7,10,12)
+          
+          iamp = 0.25
+          ifreq = cpsmidinn(60 + ivals[p4 % 37 % 11 % lenarray(ivals)])
+
+          schedule(1, 0, .5, ifreq, iamp)
+
+          if(random:i(0,1) > 0.25) then
+            schedule(1, .125, .5, ifreq * 1.5, iamp)
+          endif
+        endif
+        
+        schedule(p1, 0.5, 0, p4 + 1)
+      endin
+
+      schedule("Main", 0, 0)
+      `);
+      await cs.start();
+
+    }
+
+
+  </script>
+</html>
+
+
