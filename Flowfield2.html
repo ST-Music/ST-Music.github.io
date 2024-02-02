@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+  
+    <meta name="viewport" charset="utf-8"
+      content="width=device-width,
+      initial-scale=1.0">
+    
+    <canvas id='canvas' style="
+      margin: 0;
+      position:absolute;
+      width:100%; 
+      height:100%;
+      top:0;
+      left:0;
+      position:fixed;
+      background-color:transparent";>
+    </canvas>
+
+    <link rel="preconnect"
+     href="https://fonts.googleapis.com">
+    <link rel="preconnect"
+     href="https://fonts.gstatic.com"
+     crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English&display=swap" rel="stylesheet">
+
+    <style>
+
+p {
+   font-family: 'IM Fell English', serif;
+   font-size: 20vw ;
+   color: transparent;
+   text-align: center;
+   -webkit-text-stroke: 2px red;
+   animation: fadeInAnimation linear 3s;
+   animation-iteration-count: 1;
+   animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation{
+    0% {
+        opacity: 0;
+        text-shadow: 3px -3px 2px red;
+    }
+    10% {
+         opacity: 0
+         text-shadow: 3px 3px 2px red;
+    }
+    50% {
+         opacity: .3
+         text-shadow: 3px -3px 2px red;
+    }
+    80% {
+         opacity: 1;
+         text-shadow: 3px 3px 8px orange;
+    }
+    100% {
+          opacity: 0;
+          text-shadow: -5px 3px 5px black;
+    }
+}
+      
+#test {
+    position: fixed;
+    top: 18% ;
+    font-size: 20vw
+    opacity: 0;
+    animation: fadeIn2 linear 10s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn2{
+    0% {
+        opacity: 0;
+        font-size: 20vw;
+    }
+    10% {
+         opacity: 0
+         font-size: 10vw;
+    }
+    40% {
+         opacity: .4;
+         text-shadow: 4px 4px 8px red;
+    }
+    80% {
+         opacity: .6;
+         text-shadow: 4px 4px 8px red;
+    }
+    90% {
+         opacity: .8;
+         text-shadow: 8px 8px 16px orange;
+    }
+    100% {
+          opacity: 0;
+          font-size: 30vw;
+          rotate: 180deg;
+          text-shadow: 4px 4px 8px black;
+    }
+}
+      
+#test2 {
+    position: fixed;
+    top: 18% ;
+    font-size: 20vw
+    color: transparent;
+    opacity: 0;
+    text-align: center;
+    -webkit-text-stroke: 2px red;
+    animation: fadeIn3 linear 10s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn3{
+    0% {
+        opacity: 0;
+        font-size: 20vw;
+    }
+    10% {
+         opacity: 0
+         font-size: 10vw;
+    }
+    40% {
+         opacity: 1;
+         text-shadow: 4px 4px 8px red;
+    }
+    100% {
+          opacity: 0;
+          font-size: 30vw;
+          text-shadow: -4px 4px 8px black;
+    }
+}
+
+.play {
+  padding: 0.6em 2em;
+  border: none;
+  outline: none;
+  color: rgb(0, 255, 0);
+  background: transparent;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  opacity: .44;
+  z-index: 0;
+  border-radius: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  
+  animation: fadeIn 20s;
+}
+
+@keyframes fadeIn{
+    0% {
+         opacity: 0;
+    }
+    80% {
+         opacity: 0;
+    }
+    100% {
+          opacity: .44;             
+    }
+}
+
+.play:active {
+    transform: translateY (4px);
+}
+
+.play:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+  );
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing-play 20s linear infinite;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowing-play {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.play:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #222;
+  left: 0px;
+  top: 0px;
+  border-radius: 10px;
+}
+    </style>
+
+    
+    <p class='font-IM'>
+        Welcome</p>
+
+    <p class='font-IM'
+       style='opacity: 0; 
+              animation-delay: 3s'>to</p>
+    <p class='font-IM'
+       style='opacity: 0; 
+              animation-delay: 6s'>the</p>
+
+    <p id="test" class='font-IM'
+       style='opacity: 0; 
+              animation-delay: 9s'>
+              Upside
+              Down</p>
+
+    <p id="test2" class='font-IM'
+       style='opacity: 0; 
+              animation-delay: 9s'>
+              Upside
+              Down</p>
+
+
+    <body style="margin: 0;
+      background-color: black";>
+
+    <button type="button" id="play"
+       class="play">Play
+    </button>
+
+    <script>
+/* based on code by Daniel Shiffman
+ https://thecodingtrain.com/CodingChallenges/024-perlinnoiseflowfield.html
+
+video lesson:
+https://youtu.be/BjoM9oKOAKY
+*/
+
+const inc = 0.1;
+const scl = 10;
+var cols, rows;
+
+var zoff = 0;
+
+var particles = [];
+
+var flowfield;
+
+const weight = .1;
+
+// for colours;
+var r = 0, g = 0, b = 0, _r, _b; //155;
+
+// value (speed) to increment colours
+const r_inc = .0024, b_inc = .0029;
+var fade = 0;
+// pixelDensity
+const pdens = window.devicePixelRatio;
+//console.log(pdens)
+
+let snd = new Audio('https://www.dropbox.com/scl/fi/38b8sm9ky8ukabxzhucaa/wtable.mp3?rlkey=su4e8n4gqfnspcsk16yvyxh4a&raw=1')
+
+class Particle {
+  constructor() {
+    this.pos = createVector(random(width), random(height));
+    this.vel = createVector(0, 0);
+    this.acc = createVector(0, 0);
+    this.maxspeed = 2;
+    this.prevPos = this.pos.copy();
+  }
+
+  update() {
+    this.vel.add(this.acc);
+    this.vel.limit(this.maxspeed);
+    this.pos.add(this.vel);
+    this.acc.mult(.1);
+  }
+
+  follow(vectors) {
+    var x = floor(this.pos.x / scl);
+    var y = floor(this.pos.y / scl);
+    var index = x + y * cols;
+    var force = vectors[index];
+    this.applyForce(force);
+  }
+
+  applyForce(force) {
+    this.acc.add(force);
+  }
+
+  show() {
+    stroke(_r, g, _b);
+    strokeWeight(weight);
+    line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);
+    this.updatePrev();
+  }
+
+  updatePrev() {
+    this.prevPos.x = this.pos.x;
+    this.prevPos.y = this.pos.y;
+  }
+
+  edges() {
+    if (this.pos.x > width) {
+      this.pos.x = 0;
+      this.updatePrev();
+    }
+    if (this.pos.x < 0) {
+      this.pos.x = width;
+      this.updatePrev();
+    }
+    if (this.pos.y > height) {
+      this.pos.y = 0;
+      this.updatePrev();
+    }
+    if (this.pos.y < 0) {
+      this.pos.y = height;
+      this.updatePrev();
+    }
+  }
+}
+
+let play = document.getElementById("play");
+
+let isOn = false;
+
+play.addEventListener("click", function setup() {
+
+  if (isOn == true) {
+
+    noCanvas();
+
+    snd.pause();
+    snd.currentTime = 0;
+ document.getElementById("play").style.color = "rgb(0, 255, 0)";
+
+document.getElementById("play").textContent= "Replay";
+
+    isOn = false;
+
+    } else {
+
+var text = document.getElementsByClassName('font-IM');
+
+for (var i = 0; i < text.length; i++) { 
+    text[i].style.display = 'none'; 
+}
+
+    createCanvas(window.innerWidth, window.innerHeight)
+    pixelDensity(pdens);
+    cols = floor(width / scl);
+    rows = floor(height / scl);
+  
+    background(0);
+    
+    flowfield = new Array(cols * rows);
+
+    for (var i = 0; i < 300; i++) {
+        particles[i] = new Particle();
+    }
+
+    snd.play();
+
+document.getElementById("play").style.color = "red";
+
+document.getElementById("play").textContent= "Stop";
+
+    r = 0, g = 0, b = 0, _r = 0, _b = 0;
+    x = 0, y = 0, z = 0;
+    fade = 0;
+
+    isOn = true;
+
+// end of if statement:
+  }
+// end of setup function:
+});
+
+
+function draw() {
+  frameRate(24);
+  var yoff = 0;
+  for (var y = 0; y < rows; y++) {
+    var xoff = 0;
+    for (var x = 0; x < cols; x++) {
+      var index = x + y * cols;
+      var angle = noise(xoff, yoff, zoff) * TWO_PI * 4;
+      var v = p5.Vector.fromAngle(angle/3);
+      v.setMag(1);
+      flowfield[index] = v;
+      xoff += inc;
+      strokeWeight(1);
+      stroke(0, 50);
+    }
+    yoff += inc;
+    zoff += 0.00008;
+
+    _r = abs(sin(r/6) * fade *.7);
+    _b = abs(sin(b/6) * fade) + fade*.7;
+      
+      if (_r < 1){
+          r = 1;
+      }
+      
+      if (_b < 156){
+          b = 100;
+      }
+
+    r += r_inc
+    b += b_inc;
+    
+    if (fade < 155){
+        fade += .004;
+    } else if (g < 90){
+
+    g += .002;
+    }
+  }
+
+  for (var i = 0; i < particles.length; i++) {
+    particles[i].follow(flowfield);
+    particles[i].update();
+    particles[i].edges();
+    particles[i].show();
+  }
+
+// end of draw()
+}   
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js">
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js">
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.sound.min.js">
+    </script>
+    
+  </body>
+</html>
